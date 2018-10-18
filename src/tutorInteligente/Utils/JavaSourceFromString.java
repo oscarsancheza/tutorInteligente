@@ -1,4 +1,4 @@
-package tutorInteligente;
+package tutorInteligente.Utils;
 
 import com.sun.istack.internal.NotNull;
 
