@@ -28,7 +28,7 @@
                </children>
             </GridPane>
             <TextArea fx:id="mainCodeTxt" layoutX="22.0" layoutY="164.0" prefHeight="317.0" prefWidth="620.0" text="public class Main {&#10;&#10;    public static void main(String[] args) {&#10;&#10;    }&#10;}&#10;" wrapText="true" />
-            <Label id="preguntaTxt" alignment="TOP_CENTER" layoutX="22.0" layoutY="8.0" prefHeight="145.0" prefWidth="620.0" text="Ejercicio 1. Elabora una funcion que realice la suma de dos numeros enteros positivos y retorne su resultado." textAlignment="JUSTIFY" textOverrun="WORD_ELLIPSIS" wrapText="true">
+            <Label id="preguntaTxt" fx:id="problemaLbl" alignment="TOP_LEFT" layoutX="22.0" layoutY="8.0" prefHeight="145.0" prefWidth="620.0" text="Ejercicio 1. Elabora una funcion que realice la suma de dos numeros enteros positivos y retorne su resultado." textAlignment="JUSTIFY" textOverrun="WORD_ELLIPSIS" wrapText="true">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>

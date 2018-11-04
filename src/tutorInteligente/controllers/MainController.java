@@ -7,14 +7,19 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import tutorInteligente.Utils.JavaSourceFromString;
+import tutorInteligente.DataSource;
+import tutorInteligente.NivelFuzzyLogic;
 import tutorInteligente.Utils.Chronometer;
 import tutorInteligente.Utils.DateTimeUtil;
+import tutorInteligente.Utils.JavaSourceFromString;
+import tutorInteligente.models.Ayuda;
+import tutorInteligente.models.Problema;
 
 import javax.tools.*;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Collections;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainController {
 
@@ -24,8 +29,13 @@ public class MainController {
   @FXML private TextArea ResCompilacionTxt;
   @FXML private Label chronometerLbl;
   @FXML private Button ayudaBtn;
+  @FXML private Label problemaLbl;
 
   private Chronometer chronometer;
+  private DataSource dataSource;
+  private Problema problema;
+  private List<Ayuda> ayudas;
+  private NivelFuzzyLogic nivelFuzzyLogic;
 
   @FXML
   public void initialize() {
@@ -37,10 +47,53 @@ public class MainController {
 
     this.chronometer = new Chronometer(chronometerLbl);
     this.chronometer.play();
+
+    dataSource = new DataSource();
+
+    this.problema = dataSource.findOneByNivel(Problema.DIFICULTAD_BASICA);
+
+    if (problema != null) {
+      problemaLbl.setText(this.problema.getDescripcion());
+      ayudas = problema.getAyuda();
+    }
+
+    nivelFuzzyLogic = new NivelFuzzyLogic(false);
+  }
+
+  private void sumarAyuda() {
+    if (problema != null) {
+      problema.setTotalAyudas(problema.getTotalAyudas() + 1);
+    }
+  }
+
+  private void sumarErrores() {
+    if (problema != null) {
+      problema.setTotalErrores(problema.getTotalErrores() + 1);
+    }
+  }
+
+  private String getAyuda() {
+    String ayuda = "";
+    if (this.ayudas != null && !this.ayudas.isEmpty()) {
+      for (Ayuda item : this.ayudas) {
+        if (!item.getDescripcion().isEmpty() && !item.isVista()) {
+          ayuda = item.getDescripcion();
+          item.setVista(true);
+          break;
+        }
+      }
+    }
+
+    return ayuda;
   }
 
   private EventHandler<ActionEvent> ayuda() {
-    return event -> this.mostrarMensaje("Ayuda", "Este es el mensaje de ayuda.");
+    return event -> {
+      String ayuda = getAyuda();
+      if (!ayuda.isEmpty()) {
+        this.mostrarMensaje("Ayuda", ayuda);
+      }
+    };
   }
 
   private EventHandler<ActionEvent> compilar() {
@@ -51,10 +104,10 @@ public class MainController {
     this.chronometer.pause();
 
     boolean success;
-    StringBuilder error = new StringBuilder("El código compilo correctamente.");
+    StringBuilder mensaje = new StringBuilder("El código compilo correctamente.");
 
     if (javaCode == null || javaCode.isEmpty()) {
-      error = new StringBuilder("Error al compilar.");
+      mensaje = new StringBuilder("Error al compilar.");
       success = false;
     } else {
       JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -66,35 +119,98 @@ public class MainController {
       out.close();
 
       JavaFileObject file = new JavaSourceFromString("Main", writer.toString());
-
-      Iterable<? extends JavaFileObject> compilationUnits = Collections.singletonList(file);
+      final StringWriter sw = new StringWriter();
       JavaCompiler.CompilationTask task =
-          compiler.getTask(null, null, diagnostics, null, null, compilationUnits);
+          compiler.getTask(sw, null, diagnostics, null, null, Arrays.asList(file));
 
       success = task.call();
+
+      resultados();
+
       if (!success) {
-        error = new StringBuilder();
+        mensaje = new StringBuilder();
+        sumarErrores();
       }
 
       for (Diagnostic diagnostic : diagnostics.getDiagnostics()) {
-        error.append(diagnostic.getKind());
-        error.append(" ");
-        error.append(diagnostic.getCode());
-        error.append(", linea:");
-        error.append(diagnostic.getLineNumber());
-        error.append(", ");
-        error.append(diagnostic.getMessage(null));
-        error.append("\n");
+        mensaje.append(diagnostic.getKind());
+        mensaje.append(" ");
+        mensaje.append(diagnostic.getCode());
+        mensaje.append(", linea:");
+        mensaje.append(diagnostic.getLineNumber());
+        mensaje.append(", ");
+        mensaje.append(diagnostic.getMessage(null));
+        mensaje.append("\n");
       }
     }
 
     if (success) {
-      this.chronometer.reset();
+      if (resultados()) {
+        this.chronometer.reset();
+        siguienteNivel(
+            this.chronometer.getMinutes(),
+            this.problema.getTotalAyudas(),
+            this.problema.getTotalErrores());
+      } else {
+        this.chronometer.play();
+        mensaje.append("\nEl resultado no fue el esperado, vuelva a intentar.");
+      }
+
     } else {
       this.chronometer.play();
     }
 
-    ResCompilacionTxt.setText(error.toString());
+    ResCompilacionTxt.setText(mensaje.toString());
+  }
+
+  private boolean resultados() {
+    boolean esCorrecto = false;
+
+    try {
+      List<String> resultados = new ArrayList<>();
+      Runtime.getRuntime().exec("javac Main.class");
+      Process p = Runtime.getRuntime().exec("java Main");
+
+      InputStream inputStream = p.getInputStream();
+
+      String line;
+      BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+      while ((line = bufferedReader.readLine()) != null) {
+        resultados.add(line);
+      }
+
+      if (!resultados.isEmpty() && this.problema.getResultado().equals(resultados.get(0))) {
+        esCorrecto = true;
+      }
+
+    } catch (Exception e) {
+      System.out.println(e.toString());
+    }
+
+    return esCorrecto;
+  }
+
+  private void siguienteNivel(int tiempo, int ayuda, int errores) {
+    try {
+      String nivel = this.nivelFuzzyLogic.getNivel(tiempo, ayuda, errores);
+      switch (nivel) {
+        case Problema.DIFICULTAD_BASICA:
+          mostrarMensaje("nivel", "Basico");
+          break;
+        case Problema.DIFICULTAD_INTERMEDIA:
+          mostrarMensaje("nivel", "intermedio");
+          break;
+        case Problema.DIFICULTAD_AVANZADA:
+          mostrarMensaje("nivel", "avanzado");
+          break;
+        default:
+          mostrarMensaje("error", "Ha ocurrido un error al obtener el siguiente nivel");
+          break;
+      }
+      this.chronometer.play();
+    } catch (Exception e) {
+      mostrarMensaje("Error", e.getMessage());
+    }
   }
 
   private void mostrarMensaje(String titulo, String mensaje) {

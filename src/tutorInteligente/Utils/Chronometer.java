@@ -32,6 +32,10 @@ public class Chronometer {
     return sMin + ":" + sSec;
   }
 
+  public int getMinutes() {
+    return (int) (this.timeCounter / 60000) % 60;
+  }
+
   public void play() {
     timeline.play();
   }

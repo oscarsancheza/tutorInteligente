@@ -1,0 +1,15 @@
+[
+  {
+    "descripcion": "Realiza la impresion de un \"Hola mundo\".",
+    "resultado": "hola mundo",
+    "dificultad": "basico",
+    "ayuda": [
+      {
+        "descripcion": "Puedes utilizar System.out.println para imprimir."
+      },
+      {
+        "descripcion": "El System.out.println(\"este es un mensaje\") puede recibir una cadena como parametro."
+      }
+    ]
+  }
+]

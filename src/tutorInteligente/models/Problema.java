@@ -1,20 +1,27 @@
 package tutorInteligente.models;
 
+import java.util.List;
+
 public class Problema<T> {
-  private int id;
+
+  public static final String DIFICULTAD_BASICA = "basico";
+  public static final String DIFICULTAD_INTERMEDIA = "intermedio";
+  public static final String DIFICULTAD_AVANZADA = "avanzado";
+
   private String descripcion;
   private T resultado;
-  private Ayuda ayuda;
-  private int dificultad;
+  private List<Ayuda> ayuda;
+  private String dificultad;
   private int totalAyudas;
   private int totalErrores;
+  private boolean estaAprobado;
 
-  public int getId() {
-    return id;
+  public boolean estaAprobado() {
+    return estaAprobado;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public void setEstaAprobado(boolean estaAprobado) {
+    this.estaAprobado = estaAprobado;
   }
 
   public String getDescripcion() {
@@ -33,19 +40,19 @@ public class Problema<T> {
     this.resultado = resultado;
   }
 
-  public Ayuda getAyuda() {
+  public List<Ayuda> getAyuda() {
     return ayuda;
   }
 
-  public void setAyuda(Ayuda ayuda) {
+  public void setAyuda(List<Ayuda> ayuda) {
     this.ayuda = ayuda;
   }
 
-  public int getDificultad() {
+  public String getDificultad() {
     return dificultad;
   }
 
-  public void setDificultad(int dificultad) {
+  public void setDificultad(String dificultad) {
     this.dificultad = dificultad;
   }
 

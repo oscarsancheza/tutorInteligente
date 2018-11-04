@@ -7,6 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jFuzzyLogic_v3.0" level="project" />
+    <orderEntry type="library" name="com.google.code.gson:gson:2.8.4" level="project" />
+    <orderEntry type="library" name="jFuzzyLogic" level="project" />
+    <orderEntry type="library" name="json-simple-1.1.1" level="project" />
   </component>
 </module>

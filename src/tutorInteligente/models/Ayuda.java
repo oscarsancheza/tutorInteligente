@@ -1,17 +1,17 @@
 package tutorInteligente.models;
 
 public class Ayuda {
-  private int id;
   private String descripcion;
+  private boolean vista;
 
   public Ayuda() {}
 
-  public int getId() {
-    return id;
+  public boolean isVista() {
+    return vista;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public void setVista(boolean vista) {
+    this.vista = vista;
   }
 
   public String getDescripcion() {
