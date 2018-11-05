@@ -60,7 +60,7 @@ public class MainController {
       mostrarMensaje("error", "Ha ocurrido un error al obtener el ejercicio. vuelva a intentar");
     }
 
-    nivelFuzzyLogic = new NivelFuzzyLogic(false);
+    nivelFuzzyLogic = new NivelFuzzyLogic(true);
   }
 
   private void sumarAyuda() {

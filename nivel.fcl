@@ -55,10 +55,10 @@ RULEBLOCK No1
 	RULE 7 : IF tiempo IS suficiente AND errores IS suficiente AND ayuda IS suficiente THEN nivel IS intermedio;
 	RULE 8 : IF tiempo IS suficiente AND errores IS suficiente OR ayuda IS suficiente THEN nivel IS intermedio;
 
-	RULE 9 : IF tiempo IS poco OR ayuda IS poco OR tiempo IS poco THEN nivel IS avanzado;
-	RULE 10 : IF tiempo IS poco OR ayuda IS poco AND tiempo IS poco THEN nivel IS avanzado;
-	RULE 11 : IF tiempo IS poco AND ayuda IS poco AND tiempo IS poco THEN nivel IS avanzado;
-	RULE 12 : IF tiempo IS poco AND ayuda IS poco OR tiempo IS poco THEN nivel IS avanzado;
+	RULE 9 : IF tiempo IS poco OR ayuda IS poco OR errores IS poco THEN nivel IS avanzado;
+	RULE 10 : IF tiempo IS poco OR ayuda IS poco AND errores IS poco THEN nivel IS avanzado;
+	RULE 11 : IF tiempo IS poco AND ayuda IS poco AND errores IS poco THEN nivel IS avanzado;
+	RULE 12 : IF tiempo IS poco AND ayuda IS poco OR errores IS poco THEN nivel IS avanzado;
 END_RULEBLOCK
 
 END_FUNCTION_BLOCK

@@ -1,6 +1,6 @@
 [
   {
-    "descripcion": "Realiza la impresion de un \"hola mundo\".",
+    "descripcion": "Declara una variable de tipo String donde sea igual a: \"hola mundo\" y despues imprimir esa variable.",
     "resultado": "hola mundo",
     "dificultad": "basico",
     "ayuda": [
@@ -9,6 +9,9 @@
       },
       {
         "descripcion": "El System.out.println(\"este es un mensaje\") puede recibir una dato como parametro."
+      },
+      {
+        "descripcion": "Para declarar un variable se hace String cadena = \" \""
       }
     ]
   },
@@ -29,10 +32,35 @@
     ]
   },
   {
-    "descripcion": "intermedio",
-    "resultado": 18,
+    "descripcion": "utilizando sentencia if() imprime el numero que sea menor  200 y mayor de 10, donde  a = 22 y b= 445",
+    "resultado": 22,
+    "dificultad": "basico",
+    "ayuda": [
+      {
+        "descripcion": "La sentencia if(condicion){hacer algo}  sirve para dar una condicion y realizar un tarea dentro del mismo bloque."
+      },
+      {
+        "descripcion": "El simbolo \"<\" sirve para denotar menor que y \">\" es mayor que."
+      },
+      {
+        "descripcion": "Puedes utilizar System.out.println para imprimir."
+      },
+      {
+        "descripcion": "El System.out.println(\"este es un mensaje\") puede recibir un dato como parametro."
+      }
+    ]
+  },
+  {
+    "descripcion": "imprime el residuo 2 de a = 5 multiplicado por 10",
+    "resultado": 10,
     "dificultad": "intermedio",
     "ayuda": [
+      {
+        "descripcion": "Utiliza el siguiente simbolo para realizar un residuo de 2, \"%2\""
+      },
+      {
+        "descripcion": "Para realizar un multiplicacion utiliza el simbolo *"
+      },
       {
         "descripcion": "la variables enteras se declaran como int."
       },
@@ -45,10 +73,91 @@
     ]
   },
   {
-    "descripcion": "avanzado",
-    "resultado": 18,
+    "descripcion": "Realiza la concatenacion e impresion separados por espacio de un arreglo String de 4 posiciones utilizando la sentencia for(), donde el contenido del arreglo es [0] = Hola, [1] = estoy,[2]= aprendiendo,[3]= java",
+    "resultado": "Hola estoy aprendiendo java",
+    "dificultad": "intermedio",
+    "ayuda": [
+      {
+        "descripcion": "La sentencia for proporciona una forma compacta de recorrer un rango de valores, for (inicialización; terminación; incremento) {sentencia}"
+      },
+      {
+        "descripcion": "Para declarar un arreglo de String se utiliza String[]"
+      },
+      {
+        "descripcion": "Para inicializar un arreglo de String se puede hacer de esta forma: new String[1]"
+      },
+      {
+        "descripcion": "Puedes utilizar System.out.println para imprimir."
+      },
+      {
+        "descripcion": "El System.out.println(\"este es un mensaje\") puede recibir un dato como parametro."
+      }
+    ]
+  },
+  {
+    "descripcion": "Concatena la impresion del numero 1 hasta el 5 separados por espacio utilizando la sentencia while() e imprimiendo el valor al final.",
+    "resultado": "1 2 3 4 5",
+    "dificultad": "intermedio",
+    "ayuda": [
+      {
+        "descripcion": "La sentencia while ejecuta continuamente un bloque de instrucciones mientras sea verdadera una determinada condición. Su sintaxis es la siguiente: while (expresion) {sentencia()}"
+      },
+      {
+        "descripcion": "Puedes utilizar una variable String para ir concatenando el resultado"
+      },
+      {
+        "descripcion": "Puedes utilizar un contador que se vaya incrementando en 1 con los simbolos ++"
+      },
+      {
+        "descripcion": "Puedes utilizar System.out.println para imprimir."
+      },
+      {
+        "descripcion": "El System.out.println(\"este es un mensaje\") puede recibir un dato como parametro."
+      }
+    ]
+  },
+  {
+    "descripcion": "Imprime el resultado de una funcion que retorne el resultado de una multiplicacion donde a = 30 y b = 500",
+    "resultado": 15000,
     "dificultad": "avanzado",
     "ayuda": [
+      {
+        "descripcion": "conjunto de líneas de código (instrucciones), encapsulados en un bloque, usualmente reciben parámetros, cuyos valores utilizan para efectuar operaciones y adicionalmente retornan un valor"
+      },
+      {
+        "descripcion": "Para retornar un valor en una funcion se pone el tipo de retorno antes de declarar la funcion, int funcion()"
+      },
+      {
+        "descripcion": "Los parametros de una función son los valores que esta recibe por parte del código que la llama. Pueden ser tipos simples u objetos."
+      },
+      {
+        "descripcion": "la variables enteras se declaran como int."
+      },
+      {
+        "descripcion": "Puedes utilizar System.out.println para imprimir."
+      },
+      {
+        "descripcion": "El System.out.println(\"este es un mensaje\") puede recibir un dato como parametro."
+      }
+    ]
+  },
+  {
+    "descripcion": "Imprime el resultado de una funcion que retorne el resultado de una divicion donde a = 20 y b = 20",
+    "resultado": 1,
+    "dificultad": "avanzado",
+    "ayuda": [
+      {
+        "descripcion": "Para la divicion utiliza a/b"
+      },
+      {
+        "descripcion": "conjunto de líneas de código (instrucciones), encapsulados en un bloque, usualmente reciben parámetros, cuyos valores utilizan para efectuar operaciones y adicionalmente retornan un valor"
+      },
+      {
+        "descripcion": "Para retornar un valor en una funcion se pone el tipo de retorno antes de declarar la funcion, int funcion()"
+      },
+      {
+        "descripcion": "Los parametros de una función son los valores que esta recibe por parte del código que la llama. Pueden ser tipos simples u objetos."
+      },
       {
         "descripcion": "la variables enteras se declaran como int."
       },
