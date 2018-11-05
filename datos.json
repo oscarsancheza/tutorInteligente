@@ -1,6 +1,6 @@
 [
   {
-    "descripcion": "Realiza la impresion de un \"Hola mundo\".",
+    "descripcion": "Realiza la impresion de un \"hola mundo\".",
     "resultado": "hola mundo",
     "dificultad": "basico",
     "ayuda": [
@@ -8,7 +8,55 @@
         "descripcion": "Puedes utilizar System.out.println para imprimir."
       },
       {
-        "descripcion": "El System.out.println(\"este es un mensaje\") puede recibir una cadena como parametro."
+        "descripcion": "El System.out.println(\"este es un mensaje\") puede recibir una dato como parametro."
+      }
+    ]
+  },
+  {
+    "descripcion": "Declara dos variables con numeros enteros a = 8 y b = 10. Realiza la suma de estas dos variable e imprime el resultado",
+    "resultado": 18,
+    "dificultad": "basico",
+    "ayuda": [
+      {
+        "descripcion": "la variables enteras se declaran como int."
+      },
+      {
+        "descripcion": "Puedes utilizar System.out.println para imprimir."
+      },
+      {
+        "descripcion": "El System.out.println(\"este es un mensaje\") puede recibir un dato como parametro."
+      }
+    ]
+  },
+  {
+    "descripcion": "intermedio",
+    "resultado": 18,
+    "dificultad": "intermedio",
+    "ayuda": [
+      {
+        "descripcion": "la variables enteras se declaran como int."
+      },
+      {
+        "descripcion": "Puedes utilizar System.out.println para imprimir."
+      },
+      {
+        "descripcion": "El System.out.println(\"este es un mensaje\") puede recibir un dato como parametro."
+      }
+    ]
+  },
+  {
+    "descripcion": "avanzado",
+    "resultado": 18,
+    "dificultad": "avanzado",
+    "ayuda": [
+      {
+        "descripcion": "la variables enteras se declaran como int."
+      },
+      {
+        "descripcion": "Puedes utilizar System.out.println para imprimir."
+      },
+      {
+        "descripcion": "El System.out.println(\"este es un mensaje\") puede recibir un dato como parametro."
       }
     ]
   }

@@ -12,6 +12,7 @@ import tutorInteligente.NivelFuzzyLogic;
 import tutorInteligente.Utils.Chronometer;
 import tutorInteligente.Utils.DateTimeUtil;
 import tutorInteligente.Utils.JavaSourceFromString;
+import tutorInteligente.Utils.NumbersUtil;
 import tutorInteligente.models.Ayuda;
 import tutorInteligente.models.Problema;
 
@@ -26,7 +27,7 @@ public class MainController {
   @FXML private Label dateLbl;
   @FXML private Button compilarBtn;
   @FXML private TextArea mainCodeTxt;
-  @FXML private TextArea ResCompilacionTxt;
+  @FXML private TextArea resCompilacionTxt;
   @FXML private Label chronometerLbl;
   @FXML private Button ayudaBtn;
   @FXML private Label problemaLbl;
@@ -55,6 +56,8 @@ public class MainController {
     if (problema != null) {
       problemaLbl.setText(this.problema.getDescripcion());
       ayudas = problema.getAyuda();
+    } else {
+      mostrarMensaje("error", "Ha ocurrido un error al obtener el ejercicio. vuelva a intentar");
     }
 
     nivelFuzzyLogic = new NivelFuzzyLogic(false);
@@ -92,6 +95,9 @@ public class MainController {
       String ayuda = getAyuda();
       if (!ayuda.isEmpty()) {
         this.mostrarMensaje("Ayuda", ayuda);
+        sumarAyuda();
+      } else {
+        mostrarMensaje("Advertencia", "No existen mas ayudas para este ejercicio.");
       }
     };
   }
@@ -125,8 +131,6 @@ public class MainController {
 
       success = task.call();
 
-      resultados();
-
       if (!success) {
         mensaje = new StringBuilder();
         sumarErrores();
@@ -147,20 +151,22 @@ public class MainController {
     if (success) {
       if (resultados()) {
         this.chronometer.reset();
-        siguienteNivel(
+        this.dataSource.problemaVistoPorNivel(problema.getDificultad());
+        mostrarMensaje("Advertencia", "El resultado es correcto, pasara al siguiente ejercicio.");
+        mostrarSiguienteEjercicio(
             this.chronometer.getMinutes(),
             this.problema.getTotalAyudas(),
             this.problema.getTotalErrores());
       } else {
         this.chronometer.play();
         mensaje.append("\nEl resultado no fue el esperado, vuelva a intentar.");
+        resCompilacionTxt.setText(mensaje.toString());
       }
 
     } else {
       this.chronometer.play();
+      resCompilacionTxt.setText(mensaje.toString());
     }
-
-    ResCompilacionTxt.setText(mensaje.toString());
   }
 
   private boolean resultados() {
@@ -179,8 +185,14 @@ public class MainController {
         resultados.add(line);
       }
 
-      if (!resultados.isEmpty() && this.problema.getResultado().equals(resultados.get(0))) {
-        esCorrecto = true;
+      if (!resultados.isEmpty()) {
+        if (NumbersUtil.esNumeroEntero(resultados.get(0))) {
+          if (problema.getResultado().equals(Double.valueOf(resultados.get(0)))) {
+            esCorrecto = true;
+          }
+        } else if (problema.getResultado().equals(resultados.get(0))) {
+          esCorrecto = true;
+        }
       }
 
     } catch (Exception e) {
@@ -190,27 +202,33 @@ public class MainController {
     return esCorrecto;
   }
 
-  private void siguienteNivel(int tiempo, int ayuda, int errores) {
+  private void mostrarSiguienteEjercicio(int tiempo, int ayuda, int errores) {
     try {
       String nivel = this.nivelFuzzyLogic.getNivel(tiempo, ayuda, errores);
-      switch (nivel) {
-        case Problema.DIFICULTAD_BASICA:
-          mostrarMensaje("nivel", "Basico");
-          break;
-        case Problema.DIFICULTAD_INTERMEDIA:
-          mostrarMensaje("nivel", "intermedio");
-          break;
-        case Problema.DIFICULTAD_AVANZADA:
-          mostrarMensaje("nivel", "avanzado");
-          break;
-        default:
-          mostrarMensaje("error", "Ha ocurrido un error al obtener el siguiente nivel");
-          break;
+
+      Problema problema = this.dataSource.findOneByNivel(nivel);
+
+      if (problema != null) {
+        this.problema = problema;
+        this.problemaLbl.setText(this.problema.getDescripcion());
+        ayudas = this.problema.getAyuda();
+
+        mainCodeTxt.setText(
+            "public class Main {\n"
+                + "\n"
+                + "    public static void main(String[] args) {\n"
+                + "\n"
+                + "    }\n"
+                + "}\n");
+        resCompilacionTxt.setText("");
+      } else {
+        mostrarMensaje("error", "Has finalizado con todos los ejercicios.");
       }
-      this.chronometer.play();
     } catch (Exception e) {
       mostrarMensaje("Error", e.getMessage());
     }
+
+    this.chronometer.play();
   }
 
   private void mostrarMensaje(String titulo, String mensaje) {

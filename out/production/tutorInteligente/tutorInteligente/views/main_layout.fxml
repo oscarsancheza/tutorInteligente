@@ -36,7 +36,7 @@
                   <Font name="System Bold" size="13.0" />
                </font></Label>
             <Label fx:id="dateLbl" alignment="TOP_CENTER" layoutX="678.0" layoutY="14.0" prefHeight="19.0" prefWidth="143.0" text="12/08/18 10:50:32" textAlignment="JUSTIFY" />
-            <TextArea fx:id="ResCompilacionTxt" editable="false" layoutX="22.0" layoutY="507.0" prefHeight="122.0" prefWidth="620.0" wrapText="true" />
+            <TextArea fx:id="resCompilacionTxt" editable="false" layoutX="22.0" layoutY="507.0" prefHeight="122.0" prefWidth="620.0" wrapText="true" />
             <Label fx:id="chronometerLbl" alignment="CENTER_RIGHT" layoutX="574.0" layoutY="485.0" prefHeight="16.0" prefWidth="68.0" text="00:00" />
             </children>
         </Pane>

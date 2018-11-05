@@ -53,6 +53,17 @@ public class DataSource {
     return problemasNivelBasico;
   }
 
+  public void problemaVistoPorNivel(String nivel) {
+    if (this.problemas != null && !this.problemas.isEmpty()) {
+      for (Problema item : problemas) {
+        if (item.getDificultad().equals(nivel) && !item.estaAprobado()) {
+          item.setEstaAprobado(true);
+          break;
+        }
+      }
+    }
+  }
+
   public Problema findOneByNivel(String nivel) {
     Problema problema = null;
     if (this.problemas != null && !this.problemas.isEmpty()) {
